@@ -15,7 +15,7 @@ class GUI:
         self.gui.resizable(TRUE,TRUE)
         # self.ControlWindow.iconbitmap(LOGO_PATH)
         self.gui.title("TSA")
-        self.gui.geometry("900x490")
+        self.gui.geometry("900x590")
         self.gui.configure(bg=self.BG_COLOR)
         
 
@@ -23,13 +23,15 @@ class GUI:
         frame = tk.Frame(layoutFrame,bg=self.BG_COLOR)
         section1InputFrame = tk.Frame(layoutFrame,bg=self.BG_COLOR)
         section1OutputFrame = tk.Frame(layoutFrame,bg=self.BG_COLOR)
+        button1Frame = tk.Frame(layoutFrame,bg=self.BG_COLOR)
         section2OutputFrame = tk.Frame(layoutFrame,bg=self.BG_COLOR)
         section2InputFrame = tk.Frame(layoutFrame,bg=self.BG_COLOR)
+        button2Frame = tk.Frame(layoutFrame,bg=self.BG_COLOR)
 
 
         ttk.Style().configure('W.TButton', font =
                ('Comic Sans MS', 12, 'bold'),
-                foreground = self.FG_COLOR)
+                foreground = self.BG_COLOR)
         ttk.Style().map(
             'Custom.TCombobox',
             foreground=[('readonly', self.FG_COLOR)],
@@ -86,10 +88,12 @@ class GUI:
         kConstantLabel1 = tk.Label(section1OutputFrame,text="k = 2.83 x 10⁵",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
         kConstantLabel1.grid(column=0,row=2,sticky=tk.W)
 
-        output1 = tk.Label(section1OutputFrame,text="Output: ",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
-        output1.grid(column=0,row=3,sticky=tk.W, rowspan=2)
+        self.output1 = tk.Label(section1OutputFrame,text="Output: ",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
+        self.output1.grid(column=0,row=3,sticky=tk.W, rowspan=2)
 
-
+        # Button
+        calculateButton1 =  ttk.Button(button1Frame,text="Calculate",style = 'W.TButton',command = self.calculate1,width=10)
+        calculateButton1.grid(column=0,row=4)
 
         # SECTION 2
         inputLabel2 = tk.Label(section2InputFrame,text="Input section 2",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",15,"bold"))
@@ -130,27 +134,50 @@ class GUI:
         outLabel2 = tk.Label(section2OutputFrame,text="Output section 2",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",15,"bold"))
         outLabel2.grid(column=0,row=0,sticky=tk.W)
 
-        fomulaLabel2 = tk.Label(section2OutputFrame,text="C(N,L,D) = k x N¹·²⁶ x L⁻¹·³⁸",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
+        fomulaLabel2 = tk.Label(section2OutputFrame,text="C(N,L,D) = k x N¹·²²² x L⁻¹·³²⁶ x D²·⁵⁰⁹",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
         fomulaLabel2.grid(column=0,row=1,sticky=tk.W)
 
         kConstantLabel2 = tk.Label(section2OutputFrame,text="k = 2.541 x 10⁵",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
         kConstantLabel2.grid(column=0,row=2,sticky=tk.W)
 
-        output2 = tk.Label(section2OutputFrame,text="Output: ",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
-        output2.grid(column=0,row=3,sticky=tk.W, rowspan=2)
+        self.output2 = tk.Label(section2OutputFrame,text="Output: ",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
+        self.output2.grid(column=0,row=3,sticky=tk.W, rowspan=2)
 
-        
+        # Button
+        calculateButton2 =  ttk.Button(button2Frame,text="Calculate",style = 'W.TButton',command = self.calculate2,width=10)
+        calculateButton2.grid(column=0,row=4)
+
 
         frame.grid(row=0,column=0,padx=10,columnspan=2)
         section1InputFrame.grid(row=1,column=0,sticky="w",pady=(30,0),padx=30)
         section1OutputFrame.grid(row=1,column=1,sticky="w",pady=20, padx=(30,0))
-        section2InputFrame.grid(row=2,column=0,sticky="w",pady=(30,0),padx=30)
-        section2OutputFrame.grid(row=2,column=1,sticky="w",pady=20, padx=(30,0))
+        button1Frame.grid(row=2,column=0,padx=10,columnspan=2,pady=20)
+        section2InputFrame.grid(row=3,column=0,sticky="w",pady=(30,0),padx=30)
+        section2OutputFrame.grid(row=3,column=1,sticky="w",pady=20, padx=(30,0))
+        button2Frame.grid(row=4,column=0,padx=10,columnspan=2,pady=20)
         layoutFrame.pack()
 
         self.gui.protocol("WM_DELETE_WINDOW",self.onDestroy)
         self.gui.mainloop()
     
+
+    def calculate1(self):
+        k = 2.83 * pow(10,5)
+        varN = self.numWires1.get()
+        varL = self.weight1.get()
+        output = k * pow(varN, 1.26) * pow(varL,-1.38)
+        self.output1.config(text=f"Output: {output} cycle")
+        return
+    
+    def calculate2(self):
+        k = 2.541 * pow(10,5)
+        varN = self.numWires2.get()
+        varL = self.weight2.get()
+        varD = self.diameter2.get()
+        output = k * pow(varN, 1.222) * pow(varL,-1.326) * pow(varD,2.509)
+        self.output2.config(text=f"Output: {output} cycle")
+        return
+
 
     def onDestroy(self):
         self.gui.destroy()
