@@ -43,7 +43,6 @@ class GUI:
         welcome = tk.Label(frame,text="NGUYEN HAI",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Comic Sans MS",17,"bold"))
         welcome.grid(column=0,row=0,columnspan=4,sticky="news",pady=(0,20))
 
-
         inputLabel1 = tk.Label(section1InputFrame,text="Input section 1",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",15,"bold"))
         inputLabel1.grid(column=0,row=0,sticky=tk.W)
 
@@ -52,7 +51,7 @@ class GUI:
         weightLabel1.grid(column=0,row=1,sticky=tk.W)
         weightInput1 = tk.Entry(section1InputFrame,width=5,font=("Arial",14),textvariable=self.weight1)
         weightInput1.grid(column=1,row=1,sticky=W)
-        weightUnit1 = tk.Label(section1InputFrame,text="gram(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
+        weightUnit1 = tk.Label(section1InputFrame,text="kilogram(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
         weightUnit1.grid(column=2,row=1,sticky=tk.W)
 
         self.diameter1 = IntVar()
@@ -60,7 +59,7 @@ class GUI:
         diameterLabel1.grid(column=0,row=3,sticky=tk.W)
         diameterInput1 = tk.Entry(section1InputFrame,width=5,font=("Arial",14),textvariable=self.diameter1)
         diameterInput1.grid(column=1,row=3,sticky=W)
-        diameterUnit1 = tk.Label(section1InputFrame,text="meter(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
+        diameterUnit1 = tk.Label(section1InputFrame,text="millimeter(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
         diameterUnit1.grid(column=2,row=3,sticky=tk.W)
 
         self.csa1 = IntVar()
@@ -68,7 +67,7 @@ class GUI:
         csaLabel1.grid(column=0,row=5,sticky=tk.W)
         csaInput1 = tk.Entry(section1InputFrame,width=5,font=("Arial",14),textvariable=self.csa1)
         csaInput1.grid(column=1,row=5,sticky=W)
-        csaUnit1 = tk.Label(section1InputFrame,text="square meter(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
+        csaUnit1 = tk.Label(section1InputFrame,text="square millimeter(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
         csaUnit1.grid(column=2,row=5,sticky=tk.W)
 
         self.numWires1 = IntVar()
@@ -104,7 +103,7 @@ class GUI:
         weightLabel2.grid(column=0,row=1,sticky=tk.W)
         weightInput2 = tk.Entry(section2InputFrame,width=5,font=("Arial",14),textvariable=self.weight2)
         weightInput2.grid(column=1,row=1,sticky=W)
-        weightUnit2 = tk.Label(section2InputFrame,text="gram(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
+        weightUnit2 = tk.Label(section2InputFrame,text="kilogram(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
         weightUnit2.grid(column=2,row=1,sticky=tk.W)
 
         self.diameter2 = IntVar()
@@ -112,7 +111,7 @@ class GUI:
         diameterLabel2.grid(column=0,row=3,sticky=tk.W)
         diameterInput2 = tk.Entry(section2InputFrame,width=5,font=("Arial",14),textvariable=self.diameter2)
         diameterInput2.grid(column=1,row=3,sticky=W)
-        diameterUnit2 = tk.Label(section2InputFrame,text="meter(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
+        diameterUnit2 = tk.Label(section2InputFrame,text="millimeter(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
         diameterUnit2.grid(column=2,row=3,sticky=tk.W)
 
         self.csa2 = IntVar()
@@ -120,7 +119,7 @@ class GUI:
         csaLabel2.grid(column=0,row=5,sticky=tk.W)
         csaInput2 = tk.Entry(section2InputFrame,width=5,font=("Arial",14),textvariable=self.csa2)
         csaInput2.grid(column=1,row=5,sticky=W)
-        csaUnit2 = tk.Label(section2InputFrame,text="square meter(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
+        csaUnit2 = tk.Label(section2InputFrame,text="square millimeter(s)",bg=self.BG_COLOR,fg=self.FG_COLOR,font=("Arial",14))
         csaUnit2.grid(column=2,row=5,sticky=tk.W)
 
         self.numWires2 = IntVar()
