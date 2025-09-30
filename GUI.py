@@ -14,7 +14,7 @@ class GUI:
         self.gui.resizable(TRUE,TRUE)
         # self.ControlWindow.iconbitmap(LOGO_PATH)
         self.gui.title("TSA")
-        self.gui.geometry("600x420")
+        self.gui.geometry("450x420")
         self.gui.configure(bg=self.BG_COLOR)
         
         # ---------- TITLE ----------
@@ -68,7 +68,7 @@ class GUI:
         tk.Label(frame, text="Input", bg=self.BG_COLOR,
                  fg=self.FG_COLOR, font=("Arial", 15, "bold")).grid(row=0, column=0, sticky="w")
 
-        self.weight1 = IntVar()
+        self.weight1 = DoubleVar()
         tk.Label(frame, text="L : Weight (하중)", bg=self.BG_COLOR,
                  fg=self.FG_COLOR, font=("Arial", 14)).grid(row=1, column=0, sticky="w")
         tk.Entry(frame, textvariable=self.weight1,
@@ -105,7 +105,7 @@ class GUI:
         tk.Label(frame, text="Input", bg=self.BG_COLOR,
                  fg=self.FG_COLOR, font=("Arial", 15, "bold")).grid(row=0, column=0, sticky="w")
 
-        self.weight2 = IntVar()
+        self.weight2 = DoubleVar()
         tk.Label(frame, text="L : Weight (하중)", bg=self.BG_COLOR,
                  fg=self.FG_COLOR, font=("Arial", 14)).grid(row=1, column=0, sticky="w")
         tk.Entry(frame, textvariable=self.weight2,
@@ -113,7 +113,7 @@ class GUI:
         tk.Label(frame, text="kg", bg=self.BG_COLOR, fg=self.FG_COLOR,
                  font=("Arial", 14)).grid(row=1, column=2)
 
-        self.diameter2 = IntVar()
+        self.diameter2 = DoubleVar()
         tk.Label(frame, text="D : Diameter (직경)", bg=self.BG_COLOR,
                  fg=self.FG_COLOR, font=("Arial", 14)).grid(row=2, column=0, sticky="w")
         tk.Entry(frame, textvariable=self.diameter2,
