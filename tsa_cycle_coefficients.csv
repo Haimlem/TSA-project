@@ -1,0 +1,5 @@
+Feature,Coefficient,Interpretation
+Weight,-0.07319399357344156,Negative → shorter lifespan
+Diameter,1.7400846833287582,Positive → longer lifespan
+NumWires,0.30898632226736394,Positive → longer lifespan
+Area,8.319056188366147e-07,Positive → longer lifespan

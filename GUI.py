@@ -100,6 +100,14 @@ class GUI:
 
         ttk.Button(frame, text="Calculate", command=self.calculate1, width=12).grid(
             row=7, column=0, pady=10, columnspan = 3)
+        
+    def calculate1(self):
+        k = 2.83 * pow(10,5)
+        varN = self.numWires1.get()
+        varL = self.weight1.get()
+        output = k * pow(varN, 1.26) * pow(varL,-1.38)
+        self.output1.config(text=f"Output: {output:.2f} cycle")
+        return
 
     # ---------- SECTION 2 ----------
     def build_section2(self, parent: tk.Frame):
@@ -145,22 +153,14 @@ class GUI:
 
         ttk.Button(frame, text="Calculate", command=self.calculate2, width=12).grid(
             row=8, column=0, pady=10, columnspan=3)
-
-    def calculate1(self):
-        k = 2.83 * pow(10,5)
-        varN = self.numWires1.get()
-        varL = self.weight1.get()
-        output = k * pow(varN, 1.26) * pow(varL,-1.38)
-        self.output1.config(text=f"Output: {output} cycle")
-        return
-    
+        
     def calculate2(self):
         k = 2.541 * pow(10,5)
         varN = self.numWires2.get()
         varL = self.weight2.get()
         varD = self.diameter2.get()
         output = k * pow(varN, 1.222) * pow(varL,-1.326) * pow(varD,2.509)
-        self.output2.config(text=f"Output: {output} cycle")
+        self.output2.config(text=f"Output: {output:.2f} cycle")
         return
 
     def onDestroy(self):
