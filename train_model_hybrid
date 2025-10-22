@@ -1,0 +1,139 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split, KFold
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from xgboost import XGBRegressor
+import joblib
+import math
+
+# Load and parse data
+df = pd.read_excel("TSA 실험데이터_250923.xlsx", sheet_name="Sheet2", header=None)
+
+rows = []
+block_starts = [(3, 15), (22, 20), (41, 25)]
+diameters = [1, 1.5, 2]
+n_wire_labels = [2, 3, 4, 5, 6, 7]
+
+for block_start, weight in block_starts:
+    for d_idx, diameter in enumerate(diameters):
+        col_block = 2 + d_idx * 8
+        area_row = block_start + 1
+        for ci in range(len(n_wire_labels)):
+            if area_row < df.shape[0] and (col_block + ci) < df.shape[1]:
+                val = df.iloc[area_row, col_block + ci]
+                try:
+                    area = float(val)
+                except Exception:
+                    area = np.nan
+                for rep in range(1, 9):
+                    data_row = area_row + rep
+                    if data_row < df.shape[0] and (col_block + ci) < df.shape[1]:
+                        try:
+                            executions = float(df.iloc[data_row, col_block + ci])
+                            rows.append({
+                                "Weight": weight,
+                                "Diameter": diameter,
+                                "NumWires": n_wire_labels[ci],
+                                "Area": area,
+                                "Executions": executions
+                            })
+                        except Exception:
+                            continue
+
+data = pd.DataFrame(rows).dropna()
+
+print(f"✅ Parsed {len(data)} valid experiment rows")
+print(data.head())
+
+# Define Empirical Model Function
+def empirical_life(N, L, D, k=2.541e5):
+    return k * (N ** 1.222) * (L ** -1.326) * (D ** 2.509)
+
+data["Empirical"] = empirical_life(data["NumWires"], data["Weight"], data["Diameter"])
+data["Residual"] = data["Executions"] - data["Empirical"]
+
+# Train XGBoost on Residuals (Hybrid Model)
+X = data[["Weight", "Diameter", "NumWires", "Area"]]
+y_res = data["Residual"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y_res, test_size=0.2, random_state=123)
+
+hybrid_model = XGBRegressor(
+    n_estimators=300,
+    learning_rate=0.05,
+    max_depth=4,
+    subsample=0.9,
+    colsample_bytree=0.9,
+    random_state=42
+)
+hybrid_model.fit(X_train, y_train)
+
+# Evaluate Model Performance
+# Hybrid predictions = empirical + predicted residual
+y_pred_res = hybrid_model.predict(X_test)
+y_pred_final = data.loc[X_test.index, "Empirical"] + y_pred_res
+
+r2_hybrid = r2_score(data.loc[X_test.index, "Executions"], y_pred_final)
+rmse_hybrid = math.sqrt(mean_squared_error(data.loc[X_test.index, "Executions"], y_pred_final))
+mae_hybrid = mean_absolute_error(data.loc[X_test.index, "Executions"], y_pred_final)
+
+# Baseline (empirical-only)
+r2_emp = r2_score(data.loc[X_test.index, "Executions"], data.loc[X_test.index, "Empirical"])
+rmse_emp = math.sqrt(mean_squared_error(data.loc[X_test.index, "Executions"], data.loc[X_test.index, "Empirical"]))
+mae_emp = mean_absolute_error(data.loc[X_test.index, "Executions"], data.loc[X_test.index, "Empirical"])
+
+# Cross-validation for hybrid
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+cv_r2 = []
+for train_idx, val_idx in kf.split(X):
+    model_cv = XGBRegressor(
+        n_estimators=300,
+        learning_rate=0.05,
+        max_depth=4,
+        subsample=0.9,
+        colsample_bytree=0.9,
+        random_state=42
+    )
+    model_cv.fit(X.iloc[train_idx], y_res.iloc[train_idx])
+    pred_res_val = model_cv.predict(X.iloc[val_idx])
+    pred_final_val = data.loc[X.index[val_idx], "Empirical"] + pred_res_val
+    cv_r2.append(r2_score(data.loc[X.index[val_idx], "Executions"], pred_final_val))
+cv_mean = np.mean(cv_r2)
+
+# Display Results
+print("\n===== Hybrid Model (Empirical + XGBoost Residual) =====")
+print(f"R² (Hybrid): {r2_hybrid:.4f}")
+print(f"RMSE (Hybrid): {rmse_hybrid:.2f} cycles")
+print(f"MAE (Hybrid): {mae_hybrid:.2f} cycles")
+print(f"Cross-validated R² mean: {cv_mean:.4f}")
+
+print("\n===== Empirical Baseline =====")
+print(f"R² (Empirical): {r2_emp:.4f}")
+print(f"RMSE (Empirical): {rmse_emp:.2f} cycles")
+print(f"MAE (Empirical): {mae_emp:.2f} cycles")
+
+# Feature importance
+feat_imp = pd.DataFrame({
+    "Feature": X.columns,
+    "Importance": hybrid_model.feature_importances_
+}).sort_values("Importance", ascending=False)
+print("\nFeature Importances (Hybrid Correction Model):")
+print(feat_imp)
+
+# Save Model
+joblib.dump(hybrid_model, "tsa_cycle_predictor_hybrid.pkl")
+print("\n✅ Model saved as tsa_cycle_predictor_hybrid.pkl")
+
+# Test Predictions
+samples = np.array([
+    [15, 1.0, 3, 2.35],
+    [20, 1.5, 4, 5.3],
+    [25, 2.0, 6, 12.56]
+])
+empirical_preds = empirical_life(samples[:,2], samples[:,0], samples[:,1])
+res_preds = hybrid_model.predict(samples)
+final_preds = empirical_preds + res_preds
+
+print("\nSample Predictions (Hybrid Model):")
+for s, p in zip(samples, final_preds):
+    print(f"{s} → {p:.0f} cycles")

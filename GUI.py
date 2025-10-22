@@ -73,7 +73,7 @@ class GUI:
                  fg=self.FG_COLOR, font=("Arial", 15, "bold")).grid(row=0, column=0, sticky="w")
 
         self.weight1 = DoubleVar()
-        tk.Label(frame, text="L : Weight (하중)", bg=self.BG_COLOR,
+        tk.Label(frame, text="W : Weight (하중)", bg=self.BG_COLOR,
                  fg=self.FG_COLOR, font=("Arial", 14)).grid(row=1, column=0, sticky="w")
         tk.Entry(frame, textvariable=self.weight1,
                  font=("Arial", 14), width=5).grid(row=1, column=1, padx=(10,0))
@@ -89,7 +89,7 @@ class GUI:
         tk.Label(frame, text="Lifetime Prediction", bg=self.BG_COLOR,
                  fg=self.FG_COLOR, font=("Arial", 15, "bold")).grid(row=3, column=0, sticky="w")
 
-        tk.Label(frame, text="C(N,L) = k x N¹·²⁶ x L⁻¹·³⁸",
+        tk.Label(frame, text="C(N,W) = k x N¹·²⁶ x W⁻¹·³⁸",
                  bg=self.BG_COLOR, fg=self.FG_COLOR, font=("Arial", 14)).grid(row=4, column=0, sticky="w", columnspan=3)
         tk.Label(frame, text="k = 2.83 x 10⁵",
                  bg=self.BG_COLOR, fg=self.FG_COLOR, font=("Arial", 14)).grid(row=5, column=0, sticky="w", columnspan=3)
@@ -118,7 +118,7 @@ class GUI:
                  fg=self.FG_COLOR, font=("Arial", 15, "bold")).grid(row=0, column=0, sticky="w")
 
         self.weight2 = DoubleVar()
-        tk.Label(frame, text="L : Weight (하중)", bg=self.BG_COLOR,
+        tk.Label(frame, text="W : Weight (하중)", bg=self.BG_COLOR,
                  fg=self.FG_COLOR, font=("Arial", 14)).grid(row=1, column=0, sticky="w")
         tk.Entry(frame, textvariable=self.weight2,
                  font=("Arial", 14), width=5).grid(row=1, column=1, padx=(10,0))
@@ -142,7 +142,7 @@ class GUI:
         tk.Label(frame, text="Lifetime Prediction", bg=self.BG_COLOR,
                  fg=self.FG_COLOR, font=("Arial", 15, "bold")).grid(row=4, column=0, sticky="w")
 
-        tk.Label(frame, text="C(N,L,D) = k x N¹·²²² x L⁻¹·³²⁶ x D²·⁵⁰⁹",
+        tk.Label(frame, text="C(N,W,D) = k x N¹·²²² x W⁻¹·³²⁶ x D²·⁵⁰⁹",
                  bg=self.BG_COLOR, fg=self.FG_COLOR, font=("Arial", 14)).grid(row=5, column=0, sticky="w", columnspan=3)
         tk.Label(frame, text="k = 2.541 x 10⁵",
                  bg=self.BG_COLOR, fg=self.FG_COLOR, font=("Arial", 14)).grid(row=6, column=0, sticky="w", columnspan=3)
