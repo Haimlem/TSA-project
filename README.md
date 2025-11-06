@@ -25,7 +25,7 @@ This project addresses that challenge using:
 1. Clone the repository
 2. Install dependencies
 3. Run model training or evaluation
-4. Launch the GUI
+4. Launch the GUI (GUI_empirical.py)
 
 🧠 Models Implemented
   + Empirical Model:	Weibull-based regression derived from mechanical fatigue data
