@@ -33,7 +33,7 @@ This project addresses that challenge using:
   + Random Forest (RF)	Ensemble-based nonlinear learner for moderate data sizes
   + XGBoost (XGB)	Gradient-boosted tree model optimized for small datasets
   + Gaussian Process Regression (GPR)	Bayesian model with uncertainty quantification
-  +Hybrid Empirical–XGBoost	Combines empirical equation (as prior) + residual XGBoost correction
+  + Hybrid Empirical–XGBoost	Combines empirical equation (as prior) + residual XGBoost correction
 
 🖥️ Graphical User Interface (GUI)
 A lightweight Tkinter-based GUI enables:
